@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop - Global Store</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f5f7; }
+        
+        nav { position: fixed; top: 0; width: 100%; background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(20px); z-index: 1000; padding: 1rem 5%; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        .nav-content { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.5rem; font-weight: 700; color: #1d1d1f; text-decoration: none; }
+        .nav-links { display: flex; gap: 2rem; list-style: none; }
+        .nav-links a { color: #1d1d1f; text-decoration: none; }
+        
+        main { padding-top: 80px; max-width: 1400px; margin: 0 auto; padding-left: 5%; padding-right: 5%; }
+        
+        .filters { background: white; padding: 2rem; border-radius: 15px; margin-bottom: 2rem; }
+        .filter-group { display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; }
+        .filter-btn { padding: 0.7rem 1.5rem; border: 2px solid #ddd; background: white; border-radius: 25px; cursor: pointer; transition: all 0.3s; }
+        .filter-btn.active { background: #667eea; color: white; border-color: #667eea; }
+        
+        .products { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 2rem; margin-bottom: 3rem; }
+        .product-card { background: white; border-radius: 15px; padding: 1.5rem; transition: transform 0.3s, box-shadow 0.3s; }
+        .product-card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        .product-icon { font-size: 3rem; margin-bottom: 1rem; }
+        .product-name { font-size: 1.2rem; font-weight: 600; margin-bottom: 0.5rem; }
+        .product-category { color: #667eea; font-size: 0.9rem; margin-bottom: 0.5rem; }
+        .product-price { font-size: 1.4rem; font-weight: 700; color: #1d1d1f; margin-bottom: 1rem; }
+        .buy-button { width: 100%; padding: 0.8rem; background: #667eea; color: white; border: none; border-radius: 10px; cursor: pointer; font-weight: 600; transition: background 0.3s; }
+        .buy-button:hover { background: #5568d3; }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-content">
+            <a href="index.html" class="logo">🌍 Global Shop</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="shop.html">Products</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <h1 style="font-size: 3rem; margin-bottom: 1rem;">Our Products</h1>
+        <p style="color: #666; margin-bottom: 2rem;">Browse our collection of 50 premium products</p>
+        
+        <div class="filters">
+            <div class="filter-group">
+                <button class="filter-btn active" data-category="all">All Products</button>
+                <button class="filter-btn" data-category="Electronics">Electronics</button>
+                <button class="filter-btn" data-category="Clothing">Clothing</button>
+                <button class="filter-btn" data-category="Home">Home & Living</button>
+                <button class="filter-btn" data-category="Sports">Sports</button>
+                <button class="filter-btn" data-category="Books">Books</button>
+            </div>
+        </div>
+
+        <div class="products" id="productGrid"></div>
+    </main>
+
+    <script>
+        const products = [
+            {name: "Wireless Headphones", category: "Electronics", price: "$89.99", icon: "🎧"},
+            {name: "Smart Watch", category: "Electronics", price: "$249.99", icon: "⌚"},
+            {name: "Laptop Stand", category: "Electronics", price: "$49.99", icon: "💻"},
+            {name: "USB-C Hub", category: "Electronics", price: "$39.99", icon: "🔌"},
+            {name: "Mechanical Keyboard", category: "Electronics", price: "$129.99", icon: "⌨️"},
+            {name: "4K Webcam", category: "Electronics", price: "$159.99", icon: "📹"},
+            {name: "Portable SSD 1TB", category: "Electronics", price: "$119.99", icon: "💾"},
+            {name: "Wireless Mouse", category: "Electronics", price: "$29.99", icon: "🖱️"},
+            {name: "Monitor 27 inch", category: "Electronics", price: "$299.99", icon: "🖥️"},
+            {name: "Smartphone", category: "Electronics", price: "$699.99", icon: "📱"},
+            {name: "Casual T-Shirt", category: "Clothing", price: "$24.99", icon: "👕"},
+            {name: "Denim Jeans", category: "Clothing", price: "$59.99", icon: "👖"},
+            {name: "Winter Jacket", category: "Clothing", price: "$149.99", icon: "🧥"},
+            {name: "Running Shoes", category: "Clothing", price: "$89.99", icon: "👟"},
+            {name: "Baseball Cap", category: "Clothing", price: "$19.99", icon: "🧢"},
+            {name: "Leather Belt", category: "Clothing", price: "$29.99", icon: "📿"},
+            {name: "Wool Sweater", category: "Clothing", price: "$69.99", icon: "🧶"},
+            {name: "Formal Dress", category: "Clothing", price: "$99.99", icon: "👗"},
+            {name: "Sports Socks", category: "Clothing", price: "$12.99", icon: "🧦"},
+            {name: "Designer Handbag", category: "Clothing", price: "$199.99", icon: "👜"},
+            {name: "Coffee Maker", category: "Home", price: "$79.99", icon: "☕"},
+            {name: "Blender Pro", category: "Home", price: "$59.99", icon: "🔪"},
+            {name: "Air Purifier", category: "Home", price: "$149.99", icon: "💨"},
+            {name: "Table Lamp", category: "Home", price: "$34.99", icon: "💡"},
+            {name: "Throw Pillows Set", category: "Home", price: "$39.99", icon: "🛋️"},
+            {name: "Wall Clock", category: "Home", price: "$29.99", icon: "🕐"},
+            {name: "Bedroom Curtains", category: "Home", price: "$49.99", icon: "🪟"},
+            {name: "Kitchen Utensil Set", category: "Home", price: "$44.99", icon: "🍴"},
+            {name: "Vacuum Cleaner", category: "Home", price: "$189.99", icon: "🧹"},
+            {name: "Indoor Plant Pot", category: "Home", price: "$24.99", icon: "🪴"},
+            {name: "Yoga Mat", category: "Sports", price: "$34.99", icon: "🧘"},
+            {name: "Dumbbell Set", category: "Sports", price: "$79.99", icon: "🏋️"},
+            {name: "Tennis Racket", category: "Sports", price: "$99.99", icon: "🎾"},
+            {name: "Basketball", category: "Sports", price: "$29.99", icon: "🏀"},
+            {name: "Soccer Ball", category: "Sports", price: "$24.99", icon: "⚽"},
+            {name: "Bicycle Helmet", category: "Sports", price: "$49.99", icon: "🚴"},
+            {name: "Swimming Goggles", category: "Sports", price: "$19.99", icon: "🏊"},
+            {name: "Fitness Tracker", category: "Sports", price: "$59.99", icon: "📊"},
+            {name: "Boxing Gloves", category: "Sports", price: "$44.99", icon: "🥊"},
+            {name: "Camping Tent", category: "Sports", price: "$199.99", icon: "⛺"},
+            {name: "Fiction Novel", category: "Books", price: "$14.99", icon: "📖"},
+            {name: "Cookbook", category: "Books", price: "$24.99", icon: "👨‍🍳"},
+            {name: "Self-Help Guide", category: "Books", price: "$19.99", icon: "📚"},
+            {name: "Art History Book", category: "Books", price: "$34.99", icon: "🎨"},
+            {name: "Science Magazine", category: "Books", price: "$9.99", icon: "🔬"},
+            {name: "Travel Guide", category: "Books", price: "$22.99", icon: "🗺️"},
+            {name: "Children's Book", category: "Books", price: "$12.99", icon: "🧸"},
+            {name: "Biography", category: "Books", price: "$17.99", icon: "📝"},
+            {name: "Poetry Collection", category: "Books", price: "$16.99", icon: "✍️"},
+            {name: "Tech Manual", category: "Books", price: "$39.99", icon: "🖥️"}
+        ];
+
+        const productGrid = document.getElementById('productGrid');
+        const filterButtons = document.querySelectorAll('.filter-btn');
+
+        function displayProducts(filter = 'all') {
+            productGrid.innerHTML = '';
+            const filtered = filter === 'all' ? products : products.filter(p => p.category === filter);
+            
+            filtered.forEach(product => {
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                card.innerHTML = `
+                    <div class="product-icon">${product.icon}</div>
+                    <h3 class="product-name">${product.name}</h3>
+                    <p class="product-category">${product.category}</p>
+                    <p class="product-price">${product.price}</p>
+                    <button class="buy-button">Add to Cart</button>
+                `;
+                productGrid.appendChild(card);
+            });
+        }
+
+        filterButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterButtons.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                displayProducts(btn.dataset.category);
+            });
+        });
+
+        displayProducts();
+    </script>
+</body>
+</html>
