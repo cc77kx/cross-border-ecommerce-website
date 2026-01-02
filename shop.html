@@ -40,6 +40,13 @@
                 <li><a href="index.html">Home</a></li>
                 <li><a href="shop.html">Products</a></li>
             </ul>
+                        <div style="display: flex; align-items: center; gap: 1.5rem;">
+                <button id="accountButton" style="background: #667eea; border: none; color: white; padding: 10px 24px; border-radius: 25px; cursor: pointer; font-weight: 600; transition: all 0.3s;">Account</button>
+                <button id="cartButton" class="cart-btn" style="position: relative; background: transparent; border: 2px solid #667eea; color: #667eea; padding: 8px 16px; border-radius: 25px; cursor: pointer; font-weight: 600; transition: all 0.3s;">
+                    🛒 Cart
+                    <span class="cart-badge" style="position: absolute; top: -8px; right: -8px; background: #ff4757; color: white; border-radius: 50%; width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: bold;">0</span>
+                </button>
+            </div>
         </div>
     </nav>
 
@@ -133,6 +140,22 @@
                     <button class="buy-button">Add to Cart</button>
                 `;
                 productGrid.appendChild(card);
+                        
+        // Add click event to Add to Cart button
+        const buyButton = card.querySelector('.buy-button');
+        buyButton.addEventListener('click', () => {
+            if (window.cart) {
+                const productData = {
+                    id: `product-${Math.random().toString(36).substr(2, 9)}`,
+                    name: product.name,
+                    price: product.price,
+                    image: product.icon,
+                    category: product.category,
+                    quantity: 1
+                };
+                window.cart.addToCart(productData);
+            }
+        });
             });
         }
 
@@ -146,6 +169,68 @@
 
         displayProducts();
     </script>
+
+        <!-- Login/Register Modal -->
+    <div id="authModal" style="display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.5); z-index: 2000; align-items: center; justify-content: center;">
+        <div style="background: #fff; padding: 2.5rem 3rem; border-radius: 16px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); max-width: 420px; width: 90%; position: relative;">
+            <span id="authModalClose" style="position: absolute; right: 1.5rem; top: 1.2rem; cursor: pointer; font-size: 1.8rem; color: #999;">&times;</span>
+            <h2 style="margin-bottom: 0.5rem; font-size: 1.8rem;">Welcome to Global Shop</h2>
+            <p style="color: #666; margin-bottom: 2rem;">Choose an option to continue</p>
+            <div style="display: flex; flex-direction: column; gap: 1rem;">
+                <button id="loginPageButton" style="padding: 0.9rem 2rem; border-radius: 999px; border: none; cursor: pointer; font-weight: 600; font-size: 1.05rem; background: #667eea; color: #fff; transition: all 0.3s;">Login</button>
+                <button id="registerPageButton" style="padding: 0.9rem 2rem; border-radius: 999px; border: none; cursor: pointer; font-weight: 600; font-size: 1.05rem; background: #f5f5f7; color: #1d1d1f; transition: all 0.3s;">Register</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    // Auth modal and cart button control
+    const accountButton = document.getElementById('accountButton');
+    const authModal = document.getElementById('authModal');
+    const authModalClose = document.getElementById('authModalClose');
+    const cartButton = document.getElementById('cartButton');
+
+    if (accountButton && authModal) {
+        accountButton.addEventListener('click', () => {
+            authModal.style.display = 'flex';
+        });
+
+        authModalClose.addEventListener('click', () => {
+            authModal.style.display = 'none';
+        });
+
+        authModal.addEventListener('click', (e) => {
+            if (e.target === authModal) {
+                authModal.style.display = 'none';
+            }
+        });
+
+        document.getElementById('loginPageButton').addEventListener('click', () => {
+            authModal.style.display = 'none';
+            if (window.authSystem && window.authSystem.showLogin) {
+                window.authSystem.showLogin();
+            } else {
+                alert('登录功能即将开放');
+            }
+        });
+
+        document.getElementById('registerPageButton').addEventListener('click', () => {
+            authModal.style.display = 'none';
+            if (window.authSystem && window.authSystem.showRegister) {
+                window.authSystem.showRegister();
+            } else {
+                alert('注册功能即将开放');
+            }
+        });
+    }
+
+    if (cartButton) {
+        cartButton.addEventListener('click', () => {
+            window.location.href = 'cart.html';
+        });
+    }
+    </script>
+
     
     <!-- External JavaScript files -->
     <script src="language.js"></script>
