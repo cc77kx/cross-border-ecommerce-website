@@ -244,11 +244,19 @@
         <div class="nav-content">
             <a href="/" class="logo">🌍 Global Shop</a>
             <ul class="nav-links">
-                <li><a href="/">Home</a></li>
-                <li><a href="shop.html">Products</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
+                                <li><a href="/" data-i18n="nav.home">Home</a></li>
+                                <li><a href="shop.html" data-i18n="nav.products">Products</a></li>
+                                <li><a href="#about" data-i18n="nav.about">About</a></li>
+                                <li><a href="#contact" data-i18n="nav.contact">Contact</a></li>
             </ul>
+                        <div class="nav-actions" style="display: flex; align-items: center; gap: 1.5rem;">
+                <button class="btn-login" data-i18n="nav.login" style="background: transparent; border: 2px solid #667eea; color: #667eea; padding: 8px 20px; border-radius: 25px; cursor: pointer; font-weight: 600; transition: all 0.3s;">Login</button>
+                <button class="btn-register" data-i18n="nav.register" style="background: #667eea; border: none; color: white; padding: 8px 20px; border-radius: 25px; cursor: pointer; font-weight: 600; transition: all 0.3s;">Register</button>
+                <a href="#cart" class="cart-link" style="position: relative; text-decoration: none; font-size: 1.5rem;">
+                    🛒
+                    <span class="cart-count" style="position: absolute; top: -8px; right: -8px; background: #ff4757; color: white; border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: bold;">0</span>
+                </a>
+            </div>
         </div>
     </nav>
 
@@ -267,7 +275,14 @@
                 <p>Enjoy free worldwide shipping on all orders over $50. We deliver to over 100 countries with fast and reliable service.</p>
                 <a href="shop.html" class="cta-button" style="background: #667eea; color: white; display: inline-block;">Learn More</a>
             </div>
-            <div class="card-image">🚚</div>
+                        <div class="card-image" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                <div style="font-size: 6rem; margin-bottom: 1rem;">🚚</div>
+                <div style="display: flex; gap: 2rem; font-size: 3rem;">
+                    <span>✈️</span>
+                    <span>🚀</span>
+                    <span>📦</span>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -278,7 +293,32 @@
                 <p>100% secure transactions with industry-leading encryption. Shop with confidence knowing your data is protected.</p>
                 <a href="shop.html" class="cta-button" style="background: #667eea; color: white; display: inline-block;">Shop Securely</a>
             </div>
-            <div class="card-image" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">💳</div>
+                        <div class="card-image" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 2rem; padding: 3rem;">
+                <div style="text-align: center;">
+                    <div style="font-size: 4rem; margin-bottom: 0.5rem;">💳</div>
+                    <div style="font-size: 0.9rem; color: white;">Visa/Mastercard</div>
+                </div>
+                <div style="text-align: center;">
+                    <div style="font-size: 4rem; margin-bottom: 0.5rem;">💰</div>
+                    <div style="font-size: 0.9rem; color: white;">PayPal</div>
+                </div>
+                <div style="text-align: center;">
+                    <div style="font-size: 4rem; margin-bottom: 0.5rem;">💙</div>
+                    <div style="font-size: 0.9rem; color: white;">Alipay</div>
+                </div>
+                <div style="text-align: center;">
+                    <div style="font-size: 4rem; margin-bottom: 0.5rem;">💚</div>
+                    <div style="font-size: 0.9rem; color: white;">WeChat Pay</div>
+                </div>
+                <div style="text-align: center;">
+                    <div style="font-size: 4rem; margin-bottom: 0.5rem;">🍎</div>
+                    <div style="font-size: 0.9rem; color: white;">Apple Pay</div>
+                </div>
+                <div style="text-align: center;">
+                    <div style="font-size: 4rem; margin-bottom: 0.5rem;">🔒</div>
+                    <div style="font-size: 0.9rem; color: white;">Secure SSL</div>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -289,7 +329,15 @@
                 <p>30-day return policy with no questions asked. Your satisfaction is our priority.</p>
                 <a href="shop.html" class="cta-button" style="background: #667eea; color: white; display: inline-block;">View Policy</a>
             </div>
-            <div class="card-image" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">🔄</div>
+                        <div class="card-image" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                <div style="font-size: 6rem; margin-bottom: 1rem;">🔄</div>
+                <div style="display: flex; gap: 1.5rem; font-size: 2.5rem;">
+                    <span>✅</span>
+                    <span>📦</span>
+                    <span>⏱️</span>
+                    <span>👍</span>
+                </div>
+            </div>
         </div>
     </section>
 
