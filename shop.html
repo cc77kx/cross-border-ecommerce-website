@@ -79,16 +79,15 @@
         </div>
     </main>
 
+        const products = [
     <script>{name: "Wireless Headphones", category: "Electronics", price: "$89.99", icon: "🎧"},
             {name: "Smart Watch", category: "Electronics", price: "$249.99", icon: "⌚"},
             {name: "Laptop Stand", category: "Electronics", price: "$49.99", icon: "💻"},
+                        ];
             <script>
         const productGrid = document.getElementById('productGrid');
         const filterButtons = document.querySelectorAll('.filter-btn');
 
-        function displayProducts(filter = 'all') {
-            productGrid.innerHTML = '';
-            const filtered = filter === 'all' ? products : products.filter(p => p.category === filter);
 
             filtered.forEach(product => {
                 const card = document.createElement('div');
@@ -114,6 +113,8 @@
 
         displayProducts();
     </script>
+        <script>
+        const products = [
             {name: "USB-C Hub", category: "Electronics", price: "$39.99", icon: "🔌"},
             {name: "Mechanical Keyboard", category: "Electronics", price: "$129.99", icon: "⌨️"},
             {name: "4K Webcam", category: "Electronics", price: "$159.99", icon: "📹"},
