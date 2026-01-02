@@ -40,7 +40,7 @@ class ShoppingCart {
     }
 
     this.saveCart();
-    this.showNotification('商品已添加到购物车！', 'success');
+    this.showNotification('Item added to cart!', 'success');
     return true;
   }
 
@@ -48,7 +48,7 @@ class ShoppingCart {
   removeFromCart(index) {
     this.cart.splice(index, 1);
     this.saveCart();
-    this.showNotification('商品已从购物车移除', 'info');
+    this.showNotification('Item removed from cart', 'info');
   }
 
   // 更新商品数量
