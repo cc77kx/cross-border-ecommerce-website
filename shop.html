@@ -82,6 +82,38 @@
     <script>{name: "Wireless Headphones", category: "Electronics", price: "$89.99", icon: "🎧"},
             {name: "Smart Watch", category: "Electronics", price: "$249.99", icon: "⌚"},
             {name: "Laptop Stand", category: "Electronics", price: "$49.99", icon: "💻"},
+            <script>
+        const productGrid = document.getElementById('productGrid');
+        const filterButtons = document.querySelectorAll('.filter-btn');
+
+        function displayProducts(filter = 'all') {
+            productGrid.innerHTML = '';
+            const filtered = filter === 'all' ? products : products.filter(p => p.category === filter);
+
+            filtered.forEach(product => {
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                card.innerHTML = `
+                    <div class="product-icon">${product.icon}</div>
+                    <h3 class="product-name">${product.name}</h3>
+                    <p class="product-category">${product.category}</p>
+                    <p class="product-price">${product.price}</p>
+                    <button class="buy-button" onclick="addToCart('${product.name}', '${product.price}')">Add to Cart</button>
+                `;
+                productGrid.appendChild(card);
+            });
+        }
+
+        filterButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterButtons.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                displayProducts(btn.dataset.category);
+            });
+        });
+
+        displayProducts();
+    </script>
             {name: "USB-C Hub", category: "Electronics", price: "$39.99", icon: "🔌"},
             {name: "Mechanical Keyboard", category: "Electronics", price: "$129.99", icon: "⌨️"},
             {name: "4K Webcam", category: "Electronics", price: "$159.99", icon: "📹"},
