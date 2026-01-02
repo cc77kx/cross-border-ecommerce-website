@@ -16,7 +16,15 @@ const translations = {
     // 购物车
     'cart.title': '购物车',
     'cart.checkout': '结账',
-    'cart.total': '总计'
+    'cart.total': '总计,
+        // Hero
+        'Welcome to Global Shop': '欢迎来到Global Shop',
+        'Your trusted cross-border e-commerce platform': '您信赖的跨境电商平台',
+        'Shop Now': '立即购物',
+        'Account': '账户',
+        'Cart': '购物车',
+        '首页': '首页',
+        '产品': '产品'
   },
   'en': {
     'nav.home': 'Home',
@@ -29,7 +37,15 @@ const translations = {
     'products.addToCart': 'Add to Cart',
     'cart.title': 'Shopping Cart',
     'cart.checkout': 'Checkout',
-    'cart.total': 'Total'
+    'cart.total': 'Total,
+        // Hero 
+        'Welcome to Global Shop': 'Welcome to Global Shop',
+        'Your trusted cross-border e-commerce platform': 'Your trusted cross-border e-commerce platform',
+        'Shop Now': 'Shop Now',
+        'Account': 'Account',
+        'Cart': 'Cart',
+        '首页': 'Home',
+        '产品': 'Products'
   },
   'es': {
     'nav.home': 'Inicio',
@@ -126,6 +142,24 @@ class LanguageManager {
       element.textContent = this.translate(key);
     });
   }
+
+          // Also translate text content directly
+        const elementsToTranslate = [
+            { selector: '.hero-content h1', fallback: 'Welcome to Global Shop' },
+            { selector: '.hero-content p', fallback: 'Your trusted cross-border e-commerce platform' },
+            { selector: '.cta-button', fallback: 'Shop Now' }
+        ];
+        
+        elementsToTranslate.forEach(({ selector, fallback }) => {
+            const element = document.querySelector(selector);
+            if (element) {
+                const originalText = element.textContent.trim();
+                const translated = this.translate(originalText) || this.translate(fallback);
+                if (translated && translated !== originalText) {
+                    element.textContent = translated;
+                }
+            }
+        });
 
   initLanguageSelector() {
     const existingSelector = document.querySelector('.language-selector');
