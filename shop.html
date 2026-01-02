@@ -15,17 +15,24 @@
         .nav-links a { color: #1d1d1f; text-decoration: none; }
         
         main { padding-top: 80px; max-width: 1400px; margin: 0 auto; padding-left: 5%; padding-right: 5%; }
+                .shop-container { display: flex; gap: 2rem; }
+        .sidebar { width: 250px; background: white; padding: 1.5rem; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .sidebar h3 { margin-top: 0; margin-bottom: 1rem; font-size: 1.3rem; color: #333; }
+        .search-box { position: relative; margin-bottom: 1.5rem; }
+        .search-box input { width: 100%; padding: 0.8rem 2.5rem 0.8rem 1rem; border: 2px solid #ddd; border-radius: 8px; font-size: 1rem; }
+        .search-box input:focus { border-color: #667eea; outline: none; }
+        .search-icon { position: absolute; right: 1rem; top: 50%; transform: translateY(-50%); color: #667eea; font-size: 1.2rem; }
         
         .filters { background: white; padding: 2rem; border-radius: 15px; margin-bottom: 2rem; }
         .filter-group { display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; }
         .filter-btn { padding: 0.7rem 1.5rem; border: 2px solid #ddd; background: white; border-radius: 25px; cursor: pointer; transition: all 0.3s; }
         .filter-btn.active { background: #667eea; color: white; border-color: #667eea; }
         
-        .products { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 2rem; margin-bottom: 3rem; }
+        .products { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 2rem; margin-bottom: 3rem; }
         .product-card { background: white; border-radius: 15px; padding: 1.5rem; transition: transform 0.3s, box-shadow 0.3s; }
         .product-card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
         .product-icon { font-size: 3rem; margin-bottom: 1rem; }
-        .product-name { font-size: 1.2rem; font-weight: 600; margin-bottom: 0.5rem; }
+        .product-name { font-size: 11.5rem2rem; font-weight: 600; margin-bottom: 0.5rem; }
         .product-category { color: #667eea; font-size: 0.9rem; margin-bottom: 0.5rem; }
         .product-price { font-size: 1.4rem; font-weight: 700; color: #1d1d1f; margin-bottom: 1rem; }
         .buy-button { width: 100%; padding: 0.8rem; background: #667eea; color: white; border: none; border-radius: 10px; cursor: pointer; font-weight: 600; transition: background 0.3s; }
@@ -51,6 +58,15 @@
     </nav>
 
     <main>
+                <div class="shop-container">
+            <aside class="sidebar">
+                <h3>Search Products</h3>
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="Search products..." onkeyup="searchProducts()">
+                    <span class="search-icon">🔍</span>
+                </div>
+            </aside>
+            <div>
         <h1 style="font-size: 3rem; margin-bottom: 1rem;">Our Products</h1>
         <p style="color: #666; margin-bottom: 2rem;">Browse our collection of 50 premium products</p>
         
@@ -66,6 +82,8 @@
         </div>
 
         <div class="products" id="productGrid"></div>
+                            </div>
+        </div>
     </main>
 
     <script>
@@ -165,6 +183,23 @@
                 btn.classList.add('active');
                 displayProducts(btn.dataset.category);
             });
+
+                    // Search products function
+        function searchProducts() {
+            const input = document.getElementById('searchInput');
+            const filter = input.value.toUpperCase();
+            const cards = document.querySelectorAll('.product-card');
+            
+            cards.forEach(card => {
+                const productName = card.querySelector('.product-name').textContent;
+                const productCategory = card.querySelector('.product-category').textContent;
+                if (productName.toUpperCase().indexOf(filter) > -1 || productCategory.toUpperCase().indexOf(filter) > -1) {
+                    card.style.display = '';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
         });
 
         displayProducts();
