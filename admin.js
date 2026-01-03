@@ -167,4 +167,98 @@ function logout() {
     if (confirm('Are you sure you want to logout?')) {
         window.location.href = 'index.html';
     }
+    
+// ========== Product Management Functions ==========
+
+// Open product modal
+function openProductModal() {
+    const modal = document.getElementById('productModal');
+    modal.style.display = 'flex';
+    document.getElementById('productForm').reset();
+}
+
+// Close product modal
+function closeProductModal() {
+    const modal = document.getElementById('productModal');
+    modal.style.display = 'none';
+}
+
+// Handle product form submission
+window.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('productForm');
+    if (form) {
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            addProduct();
+        });
+    }
+});
+
+// Add product to localStorage
+function addProduct() {
+    const name = document.getElementById('productName').value;
+    const category = document.getElementById('productCategory').value;
+    const price = parseFloat(document.getElementById('productPrice').value);
+    const emoji = document.getElementById('productEmoji').value;
+    const description = document.getElementById('productDescription').value || 'No description';
+    
+    // Get existing products from localStorage
+    let products = JSON.parse(localStorage.getItem('customProducts')) || [];
+    
+    // Create new product object
+    const newProduct = {
+        id: 'CUSTOM-' + Date.now(),
+        name: name,
+        category: category,
+        price: price.toFixed(2),
+        emoji: emoji,
+        description: description,
+        custom: true,
+        timestamp: new Date().toISOString()
+    };
+    
+    // Add to products array
+    products.push(newProduct);
+    
+    // Save to localStorage
+    localStorage.setItem('customProducts', JSON.stringify(products));
+    
+    // Show success notification
+    showNotification('Product added successfully!', 'success');
+    
+    // Close modal
+    closeProductModal();
+    
+    // Log for debugging
+    console.log('Product added:', newProduct);
+    console.log('Total custom products:', products.length);
+}
+
+// Show notification
+function showNotification(message, type = 'success') {
+    // Create notification element
+    const notification = document.createElement('div');
+    notification.textContent = message;
+    notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: ${type === 'success' ? '#10b981' : '#ef4444'};
+        color: white;
+        padding: 15px 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        z-index: 10000;
+        font-weight: 500;
+        animation: slideIn 0.3s ease;
+    `;
+    
+    document.body.appendChild(notification);
+    
+    // Remove after 3 seconds
+    setTimeout(() => {
+        notification.style.animation = 'slideOut 0.3s ease';
+        setTimeout(() => notification.remove(), 300);
+    }, 3000);
+}
 }
