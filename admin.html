@@ -231,7 +231,7 @@
                 <h2 class="section-title">Quick Actions</h2>
             </div>
             <div class="quick-actions">
-                <button class="btn btn-primary">+ Add Product</button>
+                                <button class="btn btn-primary" onclick="openProductModal()">+ Add Product</button>
                 <button class="btn btn-secondary">View Orders</button>
                 <button class="btn btn-secondary">Manage Inventory</button>
                 <button class="btn btn-secondary">Export Reports</button>
@@ -300,6 +300,56 @@
         </div>
     </div>
 
+    
+    <!-- Product Management Modal -->
+    <div id="productModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center;">
+        <div style="background: white; border-radius: 12px; padding: 30px; max-width: 600px; width: 90%; max-height: 90vh; overflow-y: auto;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h2 style="margin: 0;">Add New Product</h2>
+                <button onclick="closeProductModal()" style="background: none; border: none; font-size: 24px; cursor: pointer; color: #666;">&times;</button>
+            </div>
+            
+            <form id="productForm" style="display: flex; flex-direction: column; gap: 15px;">
+                <div>
+                    <label style="display: block; margin-bottom: 5px; font-weight: 500;">Product Name *</label>
+                    <input type="text" id="productName" required style="width: 100%; padding: 10px; border: 1px solid #e5e7eb; border-radius: 6px; font-size: 14px;">
+                </div>
+                
+                <div>
+                    <label style="display: block; margin-bottom: 5px; font-weight: 500;">Category *</label>
+                    <select id="productCategory" required style="width: 100%; padding: 10px; border: 1px solid #e5e7eb; border-radius: 6px; font-size: 14px;">
+                        <option value="">Select Category</option>
+                        <option value="Electronics">Electronics</option>
+                        <option value="Clothing">Clothing</option>
+                        <option value="Home">Home & Living</option>
+                        <option value="Sports">Sports</option>
+                        <option value="Books">Books</option>
+                    </select>
+                </div>
+                
+                <div>
+                    <label style="display: block; margin-bottom: 5px; font-weight: 500;">Price *</label>
+                    <input type="number" id="productPrice" required step="0.01" min="0" placeholder="0.00" style="width: 100%; padding: 10px; border: 1px solid #e5e7eb; border-radius: 6px; font-size: 14px;">
+                </div>
+                
+                <div>
+                    <label style="display: block; margin-bottom: 5px; font-weight: 500;">Emoji Icon *</label>
+                    <input type="text" id="productEmoji" required placeholder="📦" maxlength="2" style="width: 100%; padding: 10px; border: 1px solid #e5e7eb; border-radius: 6px; font-size: 24px; text-align: center;">
+                    <small style="color: #6b7280; font-size: 12px;">Enter an emoji (e.g., 📱 💻 👕 🏀)</small>
+                </div>
+                
+                <div>
+                    <label style="display: block; margin-bottom: 5px; font-weight: 500;">Description</label>
+                    <textarea id="productDescription" rows="3" placeholder="Product description..." style="width: 100%; padding: 10px; border: 1px solid #e5e7eb; border-radius: 6px; font-size: 14px; resize: vertical;"></textarea>
+                </div>
+                
+                <div style="display: flex; gap: 10px; margin-top: 10px;">
+                    <button type="submit" class="btn btn-primary" style="flex: 1;">Add Product</button>
+                    <button type="button" onclick="closeProductModal()" class="btn btn-secondary" style="flex: 1;">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
     <script src="admin.js"></script>
 </body>
 </html>
