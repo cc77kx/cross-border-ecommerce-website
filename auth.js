@@ -1,7 +1,7 @@
 // Authentication System with Phone/Email Verification
-// 认证系统（手机/邮箱验证）
+// English Version - No Chinese text
 
-// 国家区号列表
+// Country codes list
 const countryCodes = [
   { code: '+1', country: 'US', name: 'United States' },
   { code: '+86', country: 'CN', name: 'China' },
@@ -33,88 +33,88 @@ class AuthSystem {
     this.verificationCodes = {};
   }
 
-  // 从 localStorage 加载用户
+  // Load user from localStorage
   loadUser() {
     const user = localStorage.getItem('currentUser');
     return user ? JSON.parse(user) : null;
   }
 
-  // 保存用户到 localStorage
+  // Save user to localStorage
   saveUser(user) {
     this.currentUser = user;
     localStorage.setItem('currentUser', JSON.stringify(user));
   }
 
-  // 生成验证码
+  // Generate verification code
   generateVerificationCode() {
     return Math.floor(100000 + Math.random() * 900000).toString();
   }
 
-  // 发送验证码 (模拟)
+  // Send verification code (simulation)
   async sendVerificationCode(contact, type = 'phone') {
     const code = this.generateVerificationCode();
     this.verificationCodes[contact] = {
       code: code,
       timestamp: Date.now(),
-      expiresIn: 5 * 60 * 1000 // 5分钟过期
+      expiresIn: 5 * 60 * 1000 // Expires in 5 minutes
     };
 
-    // 模拟发送延迟
+    // Simulate sending delay
     return new Promise((resolve) => {
       setTimeout(() => {
         console.log(`Verification code for ${contact}: ${code}`);
-        // 在生产环境中，这里会调用真实的 SMS/Email API
+        // In production, this would call a real SMS/Email API
         resolve({
           success: true,
           message: type === 'phone' 
-            ? '验证码已发送到您的手机' 
-            : '验证码已发送到您的邮箱',
-          code: code // 仅用于测试，生产环境不返回
+            ? 'Verification code sent to your phone' 
+            : 'Verification code sent to your email',
+          code: code // Only for testing, don't return in production
         });
       }, 1000);
     });
   }
 
-  // 验证验证码
+  // Verify code
   verifyCode(contact, code) {
     const stored = this.verificationCodes[contact];
     
     if (!stored) {
-      return { success: false, message: '验证码不存在' };
+      return { success: false, message: 'Verification code does not exist' };
     }
 
     if (Date.now() - stored.timestamp > stored.expiresIn) {
       delete this.verificationCodes[contact];
-      return { success: false, message: '验证码已过期' };
+      return { success: false, message: 'Verification code has expired' };
     }
 
     if (stored.code !== code) {
-      return { success: false, message: '验证码错误' };
+      return { success: false, message: 'Incorrect verification code' };
     }
 
     delete this.verificationCodes[contact];
-    return { success: true, message: '验证成功' };
+    return { success: true, message: 'Verification successful' };
   }
 
-  // 注册
+  // Register
   async register(data) {
     const { type, contact, countryCode, password, verificationCode } = data;
 
-    // 验证验证码
+    // Verify code
     const verification = this.verifyCode(contact, verificationCode);
     if (!verification.success) {
       return verification;
     }
 
-    // 检查用户是否已存在
+    // Check if user already exists
     const users = JSON.parse(localStorage.getItem('users') || '[]');
     const exists = users.find(u => u.contact === contact);
     
     if (exists) {
-      return { success: false, message: '该账号已注册' };
+      return { success: false, message: 'This account is already registered' };
     }
 
-    // 创建新用户
+    // Create new user
     const newUser = {
       id: Date.now().toString(),
       type,
@@ -128,42 +128,42 @@ class AuthSystem {
     users.push(newUser);
     localStorage.setItem('users', JSON.stringify(users));
 
-    // 登录用户
+    // Log in the user
     this.saveUser(newUser);
 
-    return { success: true, message: '注册成功', user: newUser };
+    return { success: true, message: 'Registration successful', user: newUser };
   }
 
-  // 登录
+  // Login
   login(contact, password) {
     const users = JSON.parse(localStorage.getItem('users') || '[]');
     const user = users.find(u => u.contact === contact && u.password === password);
 
     if (!user) {
-      return { success: false, message: '账号或密码错误' };
+      return { success: false, message: 'Incorrect email or password' };
     }
 
     this.saveUser(user);
-    return { success: true, message: '登录成功', user };
+    return { success: true, message: 'Login successful', user };
   }
 
-  // 退出登录
+  // Logout
   logout() {
     this.currentUser = null;
     localStorage.removeItem('currentUser');
   }
 
-  // 获取当前用户
+  // Get current user
   getCurrentUser() {
     return this.currentUser;
   }
 
-  // 检查是否已登录
+  // Check if logged in
   isLoggedIn() {
     return this.currentUser !== null;
   }
 }
 
-// 创建全局认证实例
+// Create global auth instance
 window.authSystem = new AuthSystem();
 window.countryCodes = countryCodes;
