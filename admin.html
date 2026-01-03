@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Global Shop</title>
+    <link rel="stylesheet" href="admin.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="logo">
+            <i class="fas fa-store"></i>
+            <span>Global Shop</span>
+        </div>
+        <nav class="nav-menu">
+            <a href="#dashboard" class="nav-item active" data-page="dashboard">
+                <i class="fas fa-chart-line"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="#orders" class="nav-item" data-page="orders">
+                <i class="fas fa-shopping-bag"></i>
+                <span>Orders</span>
+            </a>
+            <a href="#products" class="nav-item" data-page="products">
+                <i class="fas fa-box"></i>
+                <span>Products</span>
+            </a>
+            <a href="#users" class="nav-item" data-page="users">
+                <i class="fas fa-users"></i>
+                <span>Users</span>
+            </a>
+            <a href="#analytics" class="nav-item" data-page="analytics">
+                <i class="fas fa-chart-bar"></i>
+                <span>Analytics</span>
+            </a>
+            <a href="#settings" class="nav-item" data-page="settings">
+                <i class="fas fa-cog"></i>
+                <span>Settings</span>
+            </a>
+        </nav>
+        <div class="sidebar-footer">
+            <a href="/" class="nav-item">
+                <i class="fas fa-arrow-left"></i>
+                <span>Back to Site</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-left">
+                <button class="menu-toggle" id="menuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search...">
+                </div>
+            </div>
+            <div class="header-right">
+                <button class="header-icon">
+                    <i class="fas fa-bell"></i>
+                    <span class="badge">3</span>
+                </button>
+                <button class="header-icon">
+                    <i class="fas fa-envelope"></i>
+                    <span class="badge">5</span>
+                </button>
+                <div class="user-profile">
+                    <img src="https://ui-avatars.com/api/?name=Admin+User&background=667eea&color=fff" alt="Admin">
+                    <span>Admin User</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+            </div>
+        </header>
+
+        <!-- Dashboard Page -->
+        <div id="dashboard-page" class="page active">
+            <div class="page-header">
+                <h1>Dashboard</h1>
+                <button class="btn btn-primary">
+                    <i class="fas fa-download"></i>
+                    Export Report
+                </button>
+            </div>
+
+            <!-- Stats Cards -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                        <i class="fas fa-dollar-sign"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>$45,385</h3>
+                        <p>Total Revenue</p>
+                        <span class="stat-change positive">+12.5%</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>1,284</h3>
+                        <p>Total Orders</p>
+                        <span class="stat-change positive">+8.2%</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                        <i class="fas fa-box"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>245</h3>
+                        <p>Total Products</p>
+                        <span class="stat-change positive">+5.1%</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>3,872</h3>
+                        <p>Total Users</p>
+                        <span class="stat-change positive">+18.7%</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts -->
+            <div class="charts-grid">
+                <div class="chart-card">
+                    <div class="card-header">
+                        <h3>Sales Overview</h3>
+                        <select class="chart-select">
+                            <option>Last 7 Days</option>
+                            <option>Last Month</option>
+                            <option>Last Year</option>
+                        </select>
+                    </div>
+                    <canvas id="salesChart"></canvas>
+                </div>
+                <div class="chart-card">
+                    <div class="card-header">
+                        <h3>Revenue by Category</h3>
+                    </div>
+                    <canvas id="categoryChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Recent Orders -->
+            <div class="table-card">
+                <div class="card-header">
+                    <h3>Recent Orders</h3>
+                    <button class="btn btn-text">View All</button>
+                </div>
+                <div class="table-wrapper">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Order ID</th>
+                                <th>Customer</th>
+                                <th>Product</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                                <th>Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ordersTableBody">
+                            <!-- Will be populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Orders Page -->
+        <div id="orders-page" class="page">
+            <div class="page-header">
+                <h1>Orders Management</h1>
+                <div class="header-actions">
+                    <button class="btn btn-secondary">
+                        <i class="fas fa-filter"></i>
+                        Filter
+                    </button>
+                    <button class="btn btn-primary">
+                        <i class="fas fa-plus"></i>
+                        New Order
+                    </button>
+                </div>
+            </div>
+            <div class="table-card">
+                <div class="table-wrapper">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th><input type="checkbox"></th>
+                                <th>Order ID</th>
+                                <th>Customer</th>
+                                <th>Products</th>
+                                <th>Total</th>
+                                <th>Status</th>
+                                <th>Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="allOrdersTableBody">
+                            <!-- Will be populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Products Page -->
+        <div id="products-page" class="page">
+            <div class="page-header">
+                <h1>Products Management</h1>
+                <div class="header-actions">
+                    <button class="btn btn-secondary">
+                        <i class="fas fa-upload"></i>
+                        Import
+                    </button>
+                    <button class="btn btn-primary">
+                        <i class="fas fa-plus"></i>
+                        Add Product
+                    </button>
+                </div>
+            </div>
+            <div class="products-grid" id="productsGrid">
+                <!-- Will be populated by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Users Page -->
+        <div id="users-page" class="page">
+            <div class="page-header">
+                <h1>Users Management</h1>
+                <button class="btn btn-primary">
+                    <i class="fas fa-user-plus"></i>
+                    Add User
+                </button>
+            </div>
+            <div class="table-card">
+                <div class="table-wrapper">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>User ID</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Role</th>
+                                <th>Status</th>
+                                <th>Joined</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usersTableBody">
+                            <!-- Will be populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Analytics Page -->
+        <div id="analytics-page" class="page">
+            <div class="page-header">
+                <h1>Analytics</h1>
+            </div>
+            <div class="analytics-grid">
+                <div class="chart-card">
+                    <div class="card-header">
+                        <h3>Traffic Sources</h3>
+                    </div>
+                    <canvas id="trafficChart"></canvas>
+                </div>
+                <div class="chart-card">
+                    <div class="card-header">
+                        <h3>Conversion Rate</h3>
+                    </div>
+                    <canvas id="conversionChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Settings Page -->
+        <div id="settings-page" class="page">
+            <div class="page-header">
+                <h1>Settings</h1>
+            </div>
+            <div class="settings-grid">
+                <div class="settings-card">
+                    <h3>General Settings</h3>
+                    <form class="settings-form">
+                        <div class="form-group">
+                            <label>Store Name</label>
+                            <input type="text" value="Global Shop">
+                        </div>
+                        <div class="form-group">
+                            <label>Store Email</label>
+                            <input type="email" value="contact@globalshop.com">
+                        </div>
+                        <div class="form-group">
+                            <label>Currency</label>
+                            <select>
+                                <option>USD</option>
+                                <option>EUR</option>
+                                <option>GBP</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="admin.js"></script>
+</body>
+</html>
